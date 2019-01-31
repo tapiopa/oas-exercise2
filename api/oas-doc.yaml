@@ -1,0 +1,324 @@
+openapi: 3.0.0
+info:
+  title: Students API
+  version: '1.0'
+paths:
+  /students:
+    get:
+      summary: List Students
+      operationId: findStudents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/students-output'
+    post:
+      summary: Create Students
+      operationId: createStudents
+      requestBody:
+        $ref: '#/components/requestBodies/students-input'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/students-output-detailed'
+  '/students/{studentID}':
+    parameters:
+      - name: studentID
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get Students
+      operationId: getStudents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/students-output-detailed'
+    put:
+      summary: Update Students
+      operationId: updateStudents
+      requestBody:
+        $ref: '#/components/requestBodies/students-input'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/students-output-detailed'
+    delete:
+      summary: Delete Students
+      operationId: deleteStudents
+      responses:
+        '204':
+          description: ''
+  /courses:
+    get:
+      summary: List Courses
+      operationId: findCourses
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/courses-output'
+    post:
+      summary: Create Courses
+      operationId: createCourses
+      requestBody:
+        $ref: '#/components/requestBodies/courses-input'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/courses-output-detailed'
+  '/courses/{coursesId}':
+    parameters:
+      - name: coursesId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get Courses
+      operationId: getCourses
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/courses-output-detailed'
+    put:
+      summary: Update Courses
+      operationId: updateCourses
+      requestBody:
+        $ref: '#/components/requestBodies/courses-input'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/courses-output-detailed'
+    delete:
+      summary: Delete Courses
+      operationId: deleteCourses
+      responses:
+        '204':
+          description: ''
+  /grades:
+    get:
+      summary: List Grades
+      operationId: findGrades
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/grades-output'
+    post:
+      summary: Create Grades
+      operationId: createGrades
+      requestBody:
+        $ref: '#/components/requestBodies/grades-input'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/grades-output-detailed'
+  '/grades/{gradesId}':
+    parameters:
+      - name: gradesId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get Grades
+      operationId: getGrades
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/grades-output-detailed'
+    put:
+      summary: Update Grades
+      operationId: updateGrades
+      requestBody:
+        $ref: '#/components/requestBodies/grades-input'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/grades-output-detailed'
+    delete:
+      summary: Delete Grades
+      operationId: deleteGrades
+      responses:
+        '204':
+          description: ''
+servers:
+  - url: '/'
+
+components:
+  requestBodies:
+    students-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/students-input'
+    courses-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/courses-input'
+    grades-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/grades-input'
+  schemas:
+    student:
+      type: object
+      properties:
+        studentID:
+          type: integer
+        classID:
+          type: integer
+        studentName:
+          type: string
+        address:
+          type: string
+    students-common:
+      title: Students Common
+      description: >-
+        The properties that are shared amongst all versions of the Students
+        model.
+      type: object
+      properties:
+        studentID:
+          type: integer
+        classID:
+          type: integer
+        studentName:
+          type: string
+        address:
+          type: string
+      required:
+        - studentID
+        - studentName
+    students-input:
+      title: Students Input
+      description: The properties that are allowed when creating or updating a Students.
+      allOf:
+        - $ref: '#/components/schemas/students-common'
+        - type: object
+          properties: {}
+    students-output:
+      title: Students Output
+      description: The properties that are included when fetching a list of Students.
+      allOf:
+        - type: object
+          properties: {}
+        - $ref: '#/components/schemas/students-common'
+    students-output-detailed:
+      title: Students Output Detailed
+      description: The properties that are included when fetching a single Students.
+      allOf:
+        - $ref: '#/components/schemas/students-output'
+        - type: object
+          properties: {}
+    courses-common:
+      title: Courses Common
+      description: >-
+        The properties that are shared amongst all versions of the Courses
+        model.
+      type: object
+      properties:
+        courseID:
+          type: integer
+        courseName:
+          type: string
+        description:
+          type: string
+    courses-input:
+      title: Courses Input
+      description: The properties that are allowed when creating or updating a Courses.
+      allOf:
+        - $ref: '#/components/schemas/courses-common'
+        - type: object
+          properties: {}
+    courses-output:
+      title: Courses Output
+      description: The properties that are included when fetching a list of Courses.
+      allOf:
+        - type: object
+          properties: {}
+        - $ref: '#/components/schemas/courses-common'
+    courses-output-detailed:
+      title: Courses Output Detailed
+      description: The properties that are included when fetching a single Courses.
+      allOf:
+        - $ref: '#/components/schemas/courses-output'
+        - type: object
+          properties: {}
+    grades-common:
+      title: Grades Common
+      description: The properties that are shared amongst all versions of the Grades model.
+      type: object
+      properties:
+        gradeID:
+          type: integer
+        studentID:
+          type: integer
+        courseID:
+          type: integer
+        gradeDescription:
+          type: string
+    grades-input:
+      title: Grades Input
+      description: The properties that are allowed when creating or updating a Grades.
+      allOf:
+        - $ref: '#/components/schemas/grades-common'
+        - type: object
+          properties: {}
+    grades-output:
+      title: Grades Output
+      description: The properties that are included when fetching a list of Grades.
+      allOf:
+        - type: object
+          properties: {}
+        - $ref: '#/components/schemas/grades-common'
+    grades-output-detailed:
+      title: Grades Output Detailed
+      description: The properties that are included when fetching a single Grades.
+      allOf:
+        - $ref: '#/components/schemas/grades-output'
+        - type: object
+          properties: {}
